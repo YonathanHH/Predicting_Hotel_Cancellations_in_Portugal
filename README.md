@@ -44,6 +44,7 @@ capstone-project-3-hotel-cancellation/
 ├── Hotel_Cancelation_End_to_End_ML.ipynb        # Jupyter notebook with complete analysis
 ├── final_model.sav                              # Trained ML model (pickle format)
 ├── app.py                                       # Streamlit web application
+├── requirements.txt                             # Streamlit required requirement txt files
 ├── CapstoneModule3PPT.pdf                       # Presentation slides
 ├── Hotel_booking_demand.csv                     # Original raw dataset
 └── hotel_dataset_cleaned.csv                    # Cleaned and transformed data
