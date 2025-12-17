@@ -45,8 +45,8 @@ capstone-project-3-hotel-cancellation/
 ├── final_model.sav                              # Trained ML model (pickle format)
 ├── app.py                                       # Streamlit web application
 ├── CapstoneModule3PPT.pdf                       # Presentation slides
-├── Hotel_booking_demand.csv                           # Original raw dataset
-└── hotel_dataset_cleaned.csv                     # Cleaned and transformed data
+├── Hotel_booking_demand.csv                     # Original raw dataset
+└── hotel_dataset_cleaned.csv                    # Cleaned and transformed data
 ```
 
 ## Prerequisites
@@ -59,6 +59,22 @@ capstone-project-3-hotel-cancellation/
 - **Max Depth:** 12
 - **n_estimator:** 185
 
+## Running Jupyter Notebook
+It is advised to use VS Code to run the code
+
+## Model deployment testing
+```
+import pandas as pd
+import pickle
+
+df = pd.from_csv("hotel_dataset_cleaned.csv")
+pipe = pickle.load(open("final_model.sav", "rb")) ### Openning the data
+```
+testing example
+```
+print('predict class :',pipe.predict(df[51:55]))
+print('predict proba :',pipe.predict_proba(df[51:55]))
+```
 ## Model Performance
 
 - **Accuracy:** 0.801
