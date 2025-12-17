@@ -103,11 +103,9 @@ if st.button("🔮 Predict Cancellation", key="predict_btn"):
         else:
             st.success("✅ **Predicted: BOOKING WILL NOT BE CANCELLED**")
         st.divider()
-        
-        # Display input summary
-        st.subheader("📝 Booking Details Summary")
-        st.dataframe(user_input, use_container_width=True)
+
         
     except Exception as e:
         st.error(f"❌ Error making prediction: {str(e)}")
+
         st.info("💡 Tip: Make sure your model is compatible with the input features. Check feature names and order match your training data.")
