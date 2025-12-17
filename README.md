@@ -38,6 +38,7 @@ is canceled (Whether it is canceling or not)
 - Special Request 
 - Waiting List
 
+
 ## Project Structure
 
 ```
@@ -58,13 +59,15 @@ capstone-project-3-hotel-cancellation/
 - pip or conda package manager
 
 ## Final Model
+```
 - **Algorithm:** XGBoost
 - **Learning Rate:** 0.27
 - **Max Depth:** 12
 - **n_estimator:** 185
+```
 
 ## Running Jupyter Notebook
-It is advised to use VS Code to run the code
+It is advised to use VS Code to run the code.
 
 ## Model deployment testing - Option 1
 Importing required library, dataset, and model
@@ -99,6 +102,7 @@ streamlit run app.py
 - **ROC-AUC:** 0.876
 
 ## Required Libraries
+```
 - Matplotlib 3.0.2
 - Numpy 2.3.5
 - Pandas 2.3.3
@@ -110,6 +114,7 @@ streamlit run app.py
 - xgboost 3.1.2
 - pickle (built-in)
 - imbalanced-learn 0.14.0
+```
 
 ## Conclusions
 
