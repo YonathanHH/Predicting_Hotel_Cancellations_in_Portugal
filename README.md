@@ -45,8 +45,8 @@ capstone-project-3-hotel-cancellation/
 ├── final_model.sav                              # Trained ML model (pickle format)
 ├── app.py                                       # Streamlit web application
 ├── CapstoneModule3PPT.pdf                       # Presentation slides
-├── hotel_raw_data.csv                           # Original raw dataset
-└── hotel_processed_data.csv                     # Cleaned and transformed data
+├── Hotel_booking_demand.csv                           # Original raw dataset
+└── hotel_dataset_cleaned.csv                     # Cleaned and transformed data
 ```
 
 ## Prerequisites
