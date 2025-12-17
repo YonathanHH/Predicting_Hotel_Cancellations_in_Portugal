@@ -62,7 +62,8 @@ capstone-project-3-hotel-cancellation/
 ## Running Jupyter Notebook
 It is advised to use VS Code to run the code
 
-## Model deployment testing
+## Model deployment testing - Option 1
+Importing required library, dataset, and model
 ```
 import pandas as pd
 import pickle
@@ -70,11 +71,21 @@ import pickle
 df = pd.from_csv("hotel_dataset_cleaned.csv")
 pipe = pickle.load(open("final_model.sav", "rb")) ### Openning the data
 ```
-testing example
+Testing example
 ```
 print('predict class :',pipe.predict(df[51:55]))
 print('predict proba :',pipe.predict_proba(df[51:55]))
 ```
+
+## Model deployment using streamlit - Option 2 (Interactive)
+- Step 1: Open python or conda terminal
+- Step 2: Change into desired virtual environment
+- Step 3: Change directory to desired ML folder
+- Step 4: Run Streamlit as shown below
+```
+streamlit run app.py
+```
+
 ## Model Performance
 
 - **Accuracy:** 0.801
