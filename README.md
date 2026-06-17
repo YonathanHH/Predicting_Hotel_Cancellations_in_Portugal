@@ -1,11 +1,11 @@
-# Hotel Booking Cancellation Prediction - Capstone Project Module 3
+# Hotel Booking Cancellation Prediction
 
 ## Online Deployable Version
 [streamlit link](https://haryhotelprediction.streamlit.app/)
 
 ## Overview
 
-This capstone project develops a machine learning model to predict whether customers are likely to cancel their hotel bookings at a Portuguese hotel. The project implements an end-to-end machine learning workflow, from data exploration and preprocessing to model development, evaluation, and deployment through an interactive Streamlit application.
+This project develops a machine learning model to predict whether customers are likely to cancel their hotel bookings at a Portuguese hotel. The project implements an end-to-end machine learning workflow, from data exploration and preprocessing to model development, evaluation, and deployment through an interactive Streamlit application.
 
 **Target Problem:** Binary classification to identify booking cancellations before they occur, enabling the hotel to implement proactive retention strategies and optimize resource allocation.
 
@@ -42,14 +42,14 @@ is canceled (Whether it is canceling or not)
 ## Project Structure
 
 ```
-capstone-project-3-hotel-cancellation/
+Predicting_Hotel_Cancellations_in_Portugal/
 │
 ├── README.md                                    # Project documentation
 ├── Hotel_Cancelation_End_to_End_ML.ipynb        # Jupyter notebook with complete analysis
 ├── final_model.sav                              # Trained ML model (pickle format)
 ├── app.py                                       # Streamlit web application
 ├── requirements.txt                             # Streamlit required requirement txt files
-├── CapstoneModule3PPT.pdf                       # Presentation slides
+├── Presentation.pdf                             # Presentation slides
 ├── Hotel_booking_demand.csv                     # Original raw dataset
 └── hotel_dataset_cleaned.csv                    # Cleaned and transformed data
 ```
