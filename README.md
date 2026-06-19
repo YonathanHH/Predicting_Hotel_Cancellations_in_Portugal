@@ -1,43 +1,54 @@
-# Hotel Booking Cancellation Prediction
+# 🏨 Hotel Booking Cancellation Prediction
 
-## Online Deployable Version
-[streamlit link](https://haryhotelprediction.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/) [![Model Accuracy](https://img.shields.io/badge/Accuracy-80.1%25-brightgreen)](https://github.com/YonathanHH/Predicting_Hotel_Cancellations_in_Portugal) [![ROC-AUC](https://img.shields.io/badge/ROC--AUC-0.876-brightgreen)](https://github.com/YonathanHH/Predicting_Hotel_Cancellations_in_Portugal) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://haryhotelprediction.streamlit.app/)
 
 ## Overview
 
-This project develops a machine learning model to predict whether customers are likely to cancel their hotel bookings at a Portuguese hotel. The project implements an end-to-end machine learning workflow, from data exploration and preprocessing to model development, evaluation, and deployment through an interactive Streamlit application.
+This project develops a machine learning model to predict whether customers are likely to cancel their hotel bookings at a Portuguese hotel. It implements an end-to-end ML workflow — from exploratory data analysis and preprocessing to model development, evaluation, and deployment through an interactive Streamlit application with SHAP-based explainability.
 
-**Target Problem:** Binary classification to identify booking cancellations before they occur, enabling the hotel to implement proactive retention strategies and optimize resource allocation.
-
----
-
-## Project Objectives
-
-- **Business Goal:** Reduce booking cancellation losses through predictive analytics and early intervention strategies
-- **Technical Goal:** Develop a robust classification model with high predictive accuracy and explainability
-- **Stakeholders:** Hotel management, revenue management team, customer service department
-- **Impact:** Measurable improvement in booking revenue and operational efficiency
+**Target Problem:** Binary classification to identify booking cancellations before they occur, enabling the hotel to implement proactive retention strategies and optimise resource allocation.
 
 ---
 
-## Dataset Information
+## Business Context
 
-- **Source:** Hotel booking demand data from Portugal
-- **Records:** Customer booking information with anonymized personal details
+Hotel cancellations directly erode revenue and complicate operational planning. A false negative (missing a real canceller) means the hotel loses a booking it could have saved with early intervention. A false positive (flagging a non-canceller) wastes retention resources but has a lower cost. This asymmetry justifies prioritising **Recall** and **ROC-AUC** over raw accuracy in model selection.
 
-`Target`: 
-is canceled (Whether it is canceling or not)
+**Stakeholders:** Hotel management, revenue management team, customer service department  
+**Impact:** Proactive outreach to high-risk bookings can reduce revenue losses and improve occupancy forecasting.
 
-`Features`:
-- Market Segment 
-- Customer type 
-- Local or International Tourist 
-- Booking Changes
-- Previous Cancellations 
-- Parking space requirement
-- Special Request 
-- Waiting List
+---
 
+## Dataset
+
+- **Source:** Antonio, N., de Almeida, A., & Nunes, L. (2019). *Hotel booking demand datasets*. Data in Brief, 22, 41–49. [https://doi.org/10.1016/j.dib.2018.11.126](https://doi.org/10.1016/j.dib.2018.11.126)
+- **Records:** 119,390 bookings from two Portuguese hotels (2015–2017)
+- **Raw data:** Place `Hotel_booking_demand.csv` inside the `data/` directory (see [Dataset Setup](#dataset-setup))
+
+`Target`: `is_canceled` — Whether the booking was cancelled (1) or not (0)
+
+`Selected Features` (chosen based on business interpretability and feature importance):
+| Feature | Description |
+|---|---|
+| Market Segment | Distribution channel group |
+| Customer Type | Type of booking (Transient, Contract, etc.) |
+| Tourist Origin | Local vs. International guest |
+| Booking Changes | Number of amendments made |
+| Previous Cancellations | Guest's cancellation history |
+| Parking Spaces Requirement | Whether parking was requested |
+| Special Requests | Number of special requests made |
+| Waiting List | Days the booking spent on a waiting list |
+
+---
+
+## Key Findings
+
+- **Online TA bookings** carry the highest cancellation risk — the indirect booking channel reduces guest commitment
+- **Guests with prior cancellation history** are the strongest single predictor of future cancellations
+- **Special requests correlate with lower cancellation rates** — guests who invest effort in their stay are more likely to follow through
+- **Waiting list entries** dramatically increase cancellation probability once the wait exceeds 30 days
+
+---
 
 ## Project Structure
 
@@ -45,95 +56,107 @@ is canceled (Whether it is canceling or not)
 Predicting_Hotel_Cancellations_in_Portugal/
 │
 ├── README.md                                    # Project documentation
-├── Hotel_Cancelation_End_to_End_ML.ipynb        # Jupyter notebook with complete analysis
-├── final_model.sav                              # Trained ML model (pickle format)
+├── Hotel_Cancelation_End_to_End_ML.ipynb        # End-to-end ML notebook
+├── final_model.sav                              # Trained XGBoost pipeline (pickle)
 ├── app.py                                       # Streamlit web application
-├── requirements.txt                             # Streamlit required requirement txt files
-├── Presentation.pdf                             # Presentation slides
-├── Hotel_booking_demand.csv                     # Original raw dataset
-└── hotel_dataset_cleaned.csv                    # Cleaned and transformed data
+├── requirements.txt                             # Pinned dependencies
+├── .gitignore                                   # Excludes data files and binaries
+└── data/                                        # Local data directory (not tracked by Git)
+    ├── Hotel_booking_demand.csv                 # Raw dataset (download separately)
+    └── hotel_dataset_cleaned.csv                # Cleaned/transformed dataset
 ```
 
-## Prerequisites
-- Python 3.8+ (used Python 3.13.9 Kernel)
-- pip or conda package manager
+---
+
+## Dataset Setup
+
+The CSV files are excluded from Git due to their size (~4MB each). To run the notebook locally:
+
+1. Download `Hotel_booking_demand.csv` from the [original publication](https://doi.org/10.1016/j.dib.2018.11.126) or [Kaggle](https://www.kaggle.com/datasets/jessemostipak/hotel-booking-demand)
+2. Place it in the `data/` directory: `data/Hotel_booking_demand.csv`
+3. Run the notebook — the cleaned CSV will be generated at `data/hotel_dataset_cleaned.csv`
+
+---
 
 ## Final Model
-```
-- **Algorithm:** XGBoost
-- **Learning Rate:** 0.27
-- **Max Depth:** 12
-- **n_estimator:** 185
-```
 
-## Running Jupyter Notebook
-It is advised to use VS Code to run the code.
-
-## Model deployment testing - Option 1
-Importing required library, dataset, and model
-```
-import pandas as pd
-import pickle
-
-df = pd.from_csv("hotel_dataset_cleaned.csv")
-pipe = pickle.load(open("final_model.sav", "rb")) ### Openning the data
-```
-Testing example
-```
-print('predict class :',pipe.predict(df[51:55]))
-print('predict proba :',pipe.predict_proba(df[51:55]))
-```
-
-## Model deployment using streamlit - Option 2 (Interactive)
-- Step 1: Open python or conda terminal
-- Step 2: Change into desired virtual environment
-- Step 3: Change directory to desired ML folder
-- Step 4: Run Streamlit as shown below
-```
-streamlit run app.py
-```
+| Hyperparameter | Value |
+|---|---|
+| Algorithm | XGBoost |
+| Learning Rate | 0.27 |
+| Max Depth | 12 |
+| n_estimators | 185 |
 
 ## Model Performance
 
-- **Accuracy:** 0.801
-- **Precision:** 0.750
-- **Recall:** 0.693
-- **F1-Score:** 0.720
-- **ROC-AUC:** 0.876
+| Metric | Score |
+|---|---|
+| Accuracy | 0.801 |
+| Precision | 0.750 |
+| Recall | 0.693 |
+| F1-Score | 0.720 |
+| ROC-AUC | **0.876** |
 
-## Required Libraries
+---
+
+## Running Locally
+
+### Prerequisites
+- Python 3.8+ (developed on Python 3.13.9)
+- pip or conda
+
+### Setup
+```bash
+git clone https://github.com/YonathanHH/Predicting_Hotel_Cancellations_in_Portugal.git
+cd Predicting_Hotel_Cancellations_in_Portugal
+pip install -r requirements.txt
 ```
-- Matplotlib 3.0.2
-- Numpy 2.3.5
-- Pandas 2.3.3
-- Sklearn (ScikitLearn) 1.7.2
-- Shap 0.50.0
-- Seaborn 0.13.2
-- catboost 1.2.8
-- lightgbm 4.6.0
-- xgboost 3.1.2
-- pickle (built-in)
-- imbalanced-learn 0.14.0
+
+### Run the Streamlit App
+```bash
+streamlit run app.py
 ```
 
-## Conclusions
+### Quick Inference (Python)
+```python
+import pandas as pd
+import pickle
 
-This machine learning project successfully developed a predictive model for hotel booking cancellations, enabling data-driven decision-making for revenue optimization. The model demonstrates strong performance on evaluation metrics and provides actionable insights for hotel management. With proper implementation and continuous monitoring, this model can significantly improve booking revenue and operational efficiency.
+df = pd.read_csv("data/hotel_dataset_cleaned.csv")
+with open("final_model.sav", "rb") as f:
+    pipe = pickle.load(f)
+
+print('Predicted class :', pipe.predict(df[51:55]))
+print('Predicted proba :', pipe.predict_proba(df[51:55]))
+```
+
+---
+
+## Conclusions & Recommendations
+
+The XGBoost model achieves a ROC-AUC of 0.876, meaning it correctly ranks a cancelling booking above a non-cancelling one 87.6% of the time. Practically, the hotel can:
+
+1. **Flag high-risk bookings** (probability > 0.6) for proactive outreach at time of booking
+2. **Prioritise retention offers** to Online TA guests with prior cancellations
+3. **Reduce waiting list duration** as a lever — long waits dramatically increase cancellation rates
+4. **Reward special requests** — guests who make special requests are more engaged; early acknowledgment reinforces commitment
+
+---
 
 ## Project Metadata
 
-- **Project Type:** ML Capstone Project - Machine Learning
+- **Project Type:** ML Capstone — Machine Learning (Module 3)
 - **Problem Type:** Binary Classification
-- **Model Type:** Extreme Gradient Boost (XGB)
+- **Model:** XGBoost
 - **Created:** December 2025
 - **Author:** Yonathan Hary Hutagalung
 - **Institution:** Purwadhika Digital Technology School
 
+---
 
-## References & Resources
+## References
 
-- Dataset: Hotel Booking Demand (Portugal)
-- Scikit-learn Documentation: https://scikit-learn.org/
-- Streamlit Documentation: https://docs.streamlit.io/
-- Project Guidelines: Capstone Project Module 3 - Machine Learning Problem
-
+- Antonio, N., de Almeida, A., & Nunes, L. (2019). Hotel booking demand datasets. *Data in Brief*, 22, 41–49. https://doi.org/10.1016/j.dib.2018.11.126
+- Scikit-learn: https://scikit-learn.org/
+- Streamlit: https://docs.streamlit.io/
+- SHAP: https://shap.readthedocs.io/
